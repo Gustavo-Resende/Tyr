@@ -66,3 +66,29 @@ Content-Type: application/json
 }
 
 ###
+
+#-----------CLIENTES-----------
+
+GET {{Tyr_HostAddress}}/Clientes
+
+###
+
+POST {{Tyr_HostAddress}}/Clientes
+Content-Type: application/json
+
+{
+  //ClienteInputDto
+}
+
+###
+
+POST {{Tyr_HostAddress}}/Clientes
+Content-Type: application/json
+
+{
+  "id": "2",
+  "name": "Gustavo Resende",
+  "telefone": "371238123"
+}
+
+###

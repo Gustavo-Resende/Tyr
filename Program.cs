@@ -23,5 +23,6 @@ app.UseHttpsRedirection();
 
 app.MapServiceEndpoints();
 app.MapProfessionalEndpoints();
+app.MapClienteEndpoint();
 
 app.Run();

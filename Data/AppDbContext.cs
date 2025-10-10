@@ -11,5 +11,6 @@ namespace Tyr.Data
 
         public DbSet<Service> Services { get; set; }
         public DbSet<Professional> Professionals { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
     }
 }
