@@ -1,0 +1,68 @@
+@Tyr_HostAddress = https://localhost:7198
+
+#-----------SERVICES-----------
+GET {{Tyr_HostAddress}}/services/
+Accept: application/json
+
+###
+
+GET {{Tyr_HostAddress}}/services/1
+
+###
+
+PUT {{Tyr_HostAddress}}/services/1
+Content-Type: application/json
+
+{
+  "name":"Corte de Cabelo",
+  "Preco": 100
+}
+
+###
+
+DELETE {{Tyr_HostAddress}}/services/3
+
+###
+
+
+#-----------PROFESSIONALS-----------
+
+GET {{Tyr_HostAddress}}/professionals
+
+###
+
+POST {{Tyr_HostAddress}}/professionals
+Content-Type: application/json
+
+{
+  "name": "Gustavo Resende",
+  "specialty": "Barba"
+}
+###
+
+DELETE {{Tyr_HostAddress}}/professionals/6
+
+###
+
+GET {{Tyr_HostAddress}}/professionals/{id}
+
+###
+
+PUT {{Tyr_HostAddress}}/professionals/{id}
+
+###
+
+@professionalId=1
+GET {{Tyr_HostAddress}}/professionals/{{professionalId}}/services
+
+###
+
+POST {{Tyr_HostAddress}}/professionals/{{professionalId}}/services
+Content-Type: application/json
+
+{
+  "name":"Barba",
+  "price": 15
+}
+
+###
