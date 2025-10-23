@@ -21,8 +21,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapServiceEndpoints();
-app.MapProfessionalEndpoints();
-app.MapClienteEndpoint();
+app.MapServicoEndpoints();
+app.MapProfissionalEndpoints();
+app.MapClienteEndpoints();
+app.MapAgendamentoEndpoints();
 
 app.Run();

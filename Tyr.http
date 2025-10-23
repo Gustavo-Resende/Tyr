@@ -1,74 +1,74 @@
 @Tyr_HostAddress = https://localhost:7198
 
 #-----------SERVICES-----------
-GET {{Tyr_HostAddress}}/services/
+GET {{Tyr_HostAddress}}/servicos/
 Accept: application/json
 
 ###
 
-GET {{Tyr_HostAddress}}/services/1
+GET {{Tyr_HostAddress}}/servicos/1
 
 ###
 
-PUT {{Tyr_HostAddress}}/services/1
+PUT {{Tyr_HostAddress}}/servicos/1
 Content-Type: application/json
 
 {
-  "name":"Corte de Cabelo",
-  "Preco": 100
+  "nome":"Corte de Cabelo",
+  "preco": 100
 }
 
 ###
 
-DELETE {{Tyr_HostAddress}}/services/3
+DELETE {{Tyr_HostAddress}}/servicos/1
 
 ###
 
 
 #-----------PROFESSIONALS-----------
 
-GET {{Tyr_HostAddress}}/professionals
+GET {{Tyr_HostAddress}}/profissionais
 
 ###
 
-POST {{Tyr_HostAddress}}/professionals
+POST {{Tyr_HostAddress}}/profissionais
 Content-Type: application/json
 
 {
-  "name": "Gustavo Resende",
-  "specialty": "Barba"
+  "nome": "Bobao"
 }
 ###
 
-DELETE {{Tyr_HostAddress}}/professionals/6
+DELETE {{Tyr_HostAddress}}/profissionais/6
 
 ###
 
-GET {{Tyr_HostAddress}}/professionals/{id}
+GET {{Tyr_HostAddress}}/profissionais/{id}
 
 ###
 
-PUT {{Tyr_HostAddress}}/professionals/{id}
+PUT {{Tyr_HostAddress}}/profissionais/{id}
 
 ###
 
-@professionalId=1
-GET {{Tyr_HostAddress}}/professionals/{{professionalId}}/services
+@profissionalId=1
+GET {{Tyr_HostAddress}}/profissionais/{{profissionalId}}/servicos
 
 ###
 
-POST {{Tyr_HostAddress}}/professionals/{{professionalId}}/services
+POST {{Tyr_HostAddress}}/profissionais/{{profissionalId}}/servicos
 Content-Type: application/json
 
 {
-  "name":"Barba",
-  "price": 15
+  "nome":"Barba",
+  "preco": 10
 }
 
 ###
 
 #-----------CLIENTES-----------
 
+@id=1
 GET {{Tyr_HostAddress}}/Clientes
 
 ###
@@ -77,18 +77,48 @@ POST {{Tyr_HostAddress}}/Clientes
 Content-Type: application/json
 
 {
-  //ClienteInputDto
+  "nome": "Gustavo resende",
+  "telefone": "371238132883"
 }
 
 ###
 
-POST {{Tyr_HostAddress}}/Clientes
+DELETE {{Tyr_HostAddress}}/Clientes/{{id}}
+
+###
+
+GET {{Tyr_HostAddress}}/Clientes/{{id}}
+
+###
+
+PUT {{Tyr_HostAddress}}/Clientes/{{id}}
 Content-Type: application/json
 
 {
-  "id": "2",
   "name": "Gustavo Resende",
-  "telefone": "371238123"
+  "telefone": "371238132883"
 }
+
+###
+
+#-----------AGENDAMENTOS-----------
+
+GET {{Tyr_HostAddress}}/Agendamentos
+
+###
+
+POST {{Tyr_HostAddress}}/Agendamentos
+Content-Type: application/json
+
+{
+  "horario": "2025-11-10T17:00:00Z",
+  "clienteId": 2,
+  "profissionalId": 1,
+  "servicoId": 2
+}
+
+###
+
+DELETE {{Tyr_HostAddress}}/Agendamentos/1
 
 ###

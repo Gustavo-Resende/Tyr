@@ -3,16 +3,18 @@
     public class Agendamento
     {
         public int Id { get; set; }
-        public DateTime Horario { get; set; }
-        public string? Status { get; set; } // Ex: "Agendado", "Concluído", "Cancelado"
+        public DateTimeOffset? Horario { get; set; }
+        public TimeSpan? Duracao { get; set; } = TimeSpan.FromMinutes(30); // Duração de 30 minutos.
+        public string? Status { get; set; } = "Agendado";
 
         public int ClienteId { get; set; }
         public Cliente? Cliente { get; set; }
 
         public int ProfissionalId { get; set; }
-        public Professional? Profissional { get; set; }
+        public Profissional? Profissional { get; set; }
 
-        public int ServiceId { get; set; }
-        public Service? Service { get; set; }
+        public int ServicoId { get; set; }
+        public Servico? Servico { get; set; }
+
     }
 }

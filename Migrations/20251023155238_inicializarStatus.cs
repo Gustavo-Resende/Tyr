@@ -5,7 +5,7 @@
 namespace Tyr.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationInicial : Migration
+    public partial class inicializarStatus : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

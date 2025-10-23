@@ -9,8 +9,9 @@ namespace Tyr.Data
         {
         }
 
-        public DbSet<Service> Services { get; set; }
-        public DbSet<Professional> Professionals { get; set; }
+        public DbSet<Servico> Servicos { get; set; }
+        public DbSet<Profissional> Profissionais { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Agendamento> Agendamentos { get; set; }
     }
 }

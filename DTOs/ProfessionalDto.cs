@@ -2,5 +2,5 @@
 
 namespace Tyr.DTOs
 {
-    public record ProfessionalDto (int Id, string? Name, string? Specialty, List<ServiceDto> Servicos);
+    public record ProfissionalDto (int Id, string? Nome, List<ServicoDto> Servicos);
 }
