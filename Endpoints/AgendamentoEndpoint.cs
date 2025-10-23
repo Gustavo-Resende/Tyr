@@ -15,7 +15,14 @@ namespace Tyr.Endpoints
                     .Include(a => a.Cliente)
                     .Include(a => a.Profissional)
                     .Include(a => a.Servico)
-                    .Select(a => new AgendamentoOutputDto(a.Id, a.Horario, a.Status, a.ClienteId, a.ProfissionalId, a.ServicoId))
+                    .Select(a => new AgendamentoOutputDto(
+                        a.Id,
+                        a.Horario,
+                        a.Status,
+                        a.Cliente != null ? a.Cliente.Nome : null,
+                        a.Profissional != null ? a.Profissional.Nome : null,
+                        a.Servico != null ? a.Servico.Nome : null
+                    ))
                     .ToListAsync();
 
                 return Results.Ok(agendamentos);
@@ -23,38 +30,42 @@ namespace Tyr.Endpoints
 
             app.MapPost("/Agendamentos", async (AgendamentoInputDto inputDto, AppDbContext context) =>
             {
-                var verificarCliente = await context.Clientes.AnyAsync(c => c.Id == inputDto.ClienteId);
-                if (!verificarCliente)
+                var cliente = await context.Clientes.FindAsync(inputDto.ClienteId);
+                if (cliente is null)
                 {
                     return Results.BadRequest($"ClienteId {inputDto.ClienteId} não encontrado.");
                 }
 
-                var verificarProfissional = await context.Profissionais.AnyAsync(p => p.Id == inputDto.ProfissionalId);
-                if (!verificarProfissional)
+                var profissional = await context.Profissionais.FindAsync(inputDto.ProfissionalId);
+                if (profissional is null)
                 {
                     return Results.BadRequest($"ProfissionalId {inputDto.ProfissionalId} não encontrado.");
                 }
 
-                var verificarServico = await context.Servicos.AnyAsync(s => s.Id == inputDto.ServicoId);
-                if (!verificarServico)
+                var servico = await context.Servicos.FindAsync(inputDto.ServicoId);
+                if (servico is null)
                 {
                     return Results.BadRequest($"ServicoId {inputDto.ServicoId} não encontrado.");
                 }
 
-                TimeSpan duracaoDoServico = TimeSpan.FromMinutes(30);
+                var duracaoDoServico = TimeSpan.FromMinutes(30);
                 DateTimeOffset novoHorarioFim = inputDto.Horario.Value.Add(duracaoDoServico);
 
-                var conflitoEncontrado = await context.Agendamentos.AnyAsync(a => a.ProfissionalId == inputDto.ProfissionalId && a.Horario.HasValue && a.Duracao.HasValue && inputDto.Horario < (a.Horario.Value + a.Duracao.Value) && novoHorarioFim > a.Horario.Value);
+                var conflitoEncontrado = await context.Agendamentos.AnyAsync(a =>
+                    a.ProfissionalId == inputDto.ProfissionalId &&
+                    a.Horario.HasValue && a.Duracao.HasValue &&
+                    inputDto.Horario < (a.Horario.Value + a.Duracao.Value) &&
+                    novoHorarioFim > a.Horario.Value
+                );
 
                 if (conflitoEncontrado)
                 {
-                    return Results.Conflict("Horário não disponível para este profissional. O agendamento solicitado se sobrepõe a um agendamento existente.");
+                    return Results.Conflict("Horário não disponível para este profissional.");
                 }
 
                 var agendamento = new Agendamento
                 {
                     Horario = inputDto.Horario,
-                    Duracao = duracaoDoServico,
                     ClienteId = inputDto.ClienteId,
                     ProfissionalId = inputDto.ProfissionalId,
                     ServicoId = inputDto.ServicoId,
@@ -63,8 +74,14 @@ namespace Tyr.Endpoints
                 context.Agendamentos.Add(agendamento);
                 await context.SaveChangesAsync();
 
-
-                var outputDto = new AgendamentoOutputDto(agendamento.Id, agendamento.Horario, agendamento.Status, agendamento.ClienteId, agendamento.ProfissionalId, agendamento.ServicoId);
+                var outputDto = new AgendamentoOutputDto(
+                    agendamento.Id,
+                    agendamento.Horario,
+                    agendamento.Status,
+                    cliente.Nome,
+                    profissional.Nome,
+                    servico.Nome
+                );
 
                 return Results.Created($"/Agendamentos/{agendamento.Id}", outputDto);
             });
