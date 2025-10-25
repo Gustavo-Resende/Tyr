@@ -24,6 +24,7 @@ namespace Tyr.Endpoints
                     Telefone = clienteInputDto.Telefone
                 };
 
+                
                 context.Clientes.Add(cliente);
                 await context.SaveChangesAsync();
 

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Tyr.Data;
 using Tyr.Endpoints;
-using Tyr.Models;
+using Tyr.Domain.Entidades;
 
 
 var builder = WebApplication.CreateBuilder(args);

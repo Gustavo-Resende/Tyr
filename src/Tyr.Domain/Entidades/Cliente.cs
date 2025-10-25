@@ -1,4 +1,4 @@
-﻿namespace Tyr.Models
+﻿namespace Tyr.Domain.Entidades
 {
     public class Cliente
     {

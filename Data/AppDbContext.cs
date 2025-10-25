@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tyr.Models;
+using Tyr.Domain.Entidades; 
 
 namespace Tyr.Data
 {

@@ -1,4 +1,5 @@
-﻿using Tyr.Models;
+﻿using Tyr.Domain.Entidades;
+using Tyr.Models;
 
 namespace Tyr.DTOs
 {

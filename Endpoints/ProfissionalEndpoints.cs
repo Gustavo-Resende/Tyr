@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tyr.Data;
 using Tyr.DTOs;
+using Tyr.Domain.Entidades;
 using Tyr.Models;
 
 namespace Tyr.Endpoints

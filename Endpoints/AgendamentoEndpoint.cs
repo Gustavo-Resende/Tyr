@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tyr.Data;
 using Tyr.DTOs;
+using Tyr.Interfaces;
 using Tyr.Models;
 
 namespace Tyr.Endpoints
@@ -28,22 +29,27 @@ namespace Tyr.Endpoints
                 return Results.Ok(agendamentos);
             });
 
-            app.MapPost("/Agendamentos", async (AgendamentoInputDto inputDto, AppDbContext context) =>
+            app.MapPost("/Agendamentos", async (AgendamentoInputDto inputDto, IClienteRepository clienteRepo, IProfissionalRepository profissionalRepo, IServicoRepository servicoRepo ,AppDbContext context) =>
             {
-                var cliente = await context.Clientes.FindAsync(inputDto.ClienteId);
-                if (cliente is null)
+                // Aprender sobre configurar o program.cs para usar injeçao de dependencia (scoped, transient, singleton)
+                // Aprender sobre Injeçao de Dependencia para melhorar esse codigo
+                // Como funciona o [fromServices] do .net
+                // Separar a logica de validacao em outra classe
+
+                var clienteExiste = await clienteRepo.ObterClientePorIdAsync(inputDto.ClienteId);
+                if (clienteExiste is null)
                 {
                     return Results.BadRequest($"ClienteId {inputDto.ClienteId} não encontrado.");
                 }
 
-                var profissional = await context.Profissionais.FindAsync(inputDto.ProfissionalId);
-                if (profissional is null)
+                var profissionalExiste = await profissionalRepo.ObterProfissionalPorIdAsync(inputDto.ProfissionalId);
+                if (profissionalExiste is null)
                 {
                     return Results.BadRequest($"ProfissionalId {inputDto.ProfissionalId} não encontrado.");
                 }
 
-                var servico = await context.Servicos.FindAsync(inputDto.ServicoId);
-                if (servico is null)
+                var servicoExiste = await servicoRepo.ObterServicoPorIdAsync(inputDto.ServicoId);
+                if (servicoExiste is null)
                 {
                     return Results.BadRequest($"ServicoId {inputDto.ServicoId} não encontrado.");
                 }
@@ -78,9 +84,9 @@ namespace Tyr.Endpoints
                     agendamento.Id,
                     agendamento.Horario,
                     agendamento.Status,
-                    cliente.Nome,
-                    profissional.Nome,
-                    servico.Nome
+                    clienteExiste.Nome,
+                    profissionalExiste.Nome,
+                    servicoExiste.Nome
                 );
 
                 return Results.Created($"/Agendamentos/{agendamento.Id}", outputDto);

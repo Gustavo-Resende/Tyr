@@ -1,4 +1,4 @@
-﻿namespace Tyr.Models
+﻿namespace Tyr.Domain.Entidades
 {
     public class Agendamento
     {
@@ -12,7 +12,7 @@
 
         public int ProfissionalId { get; set; }
         public Profissional? Profissional { get; set; }
-
+        
         public int ServicoId { get; set; }
         public Servico? Servico { get; set; }
 
