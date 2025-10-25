@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tyr.Domain.Entidades; 
+using Tyr.Domain.AgendamentoAggregate;
+using Tyr.Domain.ClienteAggregate;
+using Tyr.Domain.ProfissionalAggregate;
+using Tyr.Domain.ServicoAggregate;
 
-namespace Tyr.Data
+namespace Tyr.Infrastructure.Persistence
 {
     public class AppDbContext : DbContext
     {

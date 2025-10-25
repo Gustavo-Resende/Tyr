@@ -1,4 +1,4 @@
-﻿using Tyr.Domain.Entidades;
+﻿using Tyr.Domain.ProfissionalAggregate;
 
 namespace Tyr.Domain.Interfaces
 {

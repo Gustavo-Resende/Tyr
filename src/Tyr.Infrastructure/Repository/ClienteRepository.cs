@@ -1,6 +1,6 @@
-﻿using Tyr.Data;
-using Tyr.Interfaces;
-using Tyr.Models;
+﻿using Tyr.Domain.ClienteAggregate;
+using Tyr.Domain.Interfaces;
+using Tyr.Infrastructure.Persistence;
 
 namespace Tyr.Repository
 {
@@ -27,7 +27,8 @@ namespace Tyr.Repository
         public async Task<Cliente?> ObterClientePorIdAsync(int clienteId)
         {
             var cliente = await _context.Clientes.FindAsync(clienteId);
-            if (cliente is null) {
+            if (cliente is null)
+            {
                 return null;
             }
 

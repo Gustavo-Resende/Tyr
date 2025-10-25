@@ -1,4 +1,4 @@
-﻿using Tyr.Domain.Entidades;
+﻿using Tyr.Domain.ClienteAggregate;
 
 namespace Tyr.Domain.Interfaces
 {

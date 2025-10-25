@@ -1,8 +1,10 @@
-﻿namespace Tyr.Domain.Entidades
+﻿using Tyr.Domain.Entities;
+using Tyr.Domain.ProfissionalAggregate;
+
+namespace Tyr.Domain.ServicoAggregate
 {
-    public class Servico
+    public class Servico : EntityBase<int>, IAggregateRoot
     {
-        public int Id { get; set; }
         public string? Nome { get; set; } = string.Empty;
         public decimal Preco { get; set; }
 

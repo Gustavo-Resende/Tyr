@@ -1,6 +1,6 @@
-﻿using Tyr.Data;
-using Tyr.Interfaces;
-using Tyr.Models;
+﻿using Tyr.Domain.Interfaces;
+using Tyr.Domain.ServicoAggregate;
+using Tyr.Infrastructure.Persistence;
 
 namespace Tyr.Repository
 {

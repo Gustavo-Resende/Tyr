@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tyr.Data;
-using Tyr.Domain.Entidades;
+using Tyr.Domain.ServicoAggregate;
 
 namespace Tyr.Endpoints
 {

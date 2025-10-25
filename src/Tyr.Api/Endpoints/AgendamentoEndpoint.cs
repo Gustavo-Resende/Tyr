@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tyr.Data;
+using Tyr.Domain.Interfaces;
 using Tyr.DTOs;
-using Tyr.Interfaces;
-using Tyr.Models;
 
 namespace Tyr.Endpoints
 {
@@ -29,7 +27,7 @@ namespace Tyr.Endpoints
                 return Results.Ok(agendamentos);
             });
 
-            app.MapPost("/Agendamentos", async (AgendamentoInputDto inputDto, IClienteRepository clienteRepo, IProfissionalRepository profissionalRepo, IServicoRepository servicoRepo ,AppDbContext context) =>
+            app.MapPost("/Agendamentos", async (AgendamentoInputDto inputDto, IClienteRepository clienteRepo, IProfissionalRepository profissionalRepo, IServicoRepository servicoRepo, AppDbContext context) =>
             {
                 // Aprender sobre configurar o program.cs para usar injeçao de dependencia (scoped, transient, singleton)
                 // Aprender sobre Injeçao de Dependencia para melhorar esse codigo

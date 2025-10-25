@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Tyr.Data;
+using Tyr.Infrastructure.Data;
 
 #nullable disable
 
 namespace Tyr.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251023142443_traducaoDoProjeto")]
+    partial class traducaoDoProjeto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Tyr.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Tyr.Models.Agendamento", b =>
+            modelBuilder.Entity("Tyr.Domain.Entidades.Agendamento", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +62,7 @@ namespace Tyr.Migrations
                     b.ToTable("Agendamentos");
                 });
 
-            modelBuilder.Entity("Tyr.Models.Cliente", b =>
+            modelBuilder.Entity("Tyr.Domain.Entidades.Cliente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +81,7 @@ namespace Tyr.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("Tyr.Models.Profissional", b =>
+            modelBuilder.Entity("Tyr.Domain.Entidades.Profissional", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +97,7 @@ namespace Tyr.Migrations
                     b.ToTable("Profissionais");
                 });
 
-            modelBuilder.Entity("Tyr.Models.Servico", b =>
+            modelBuilder.Entity("Tyr.Domain.Entidades.Servico", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,21 +121,21 @@ namespace Tyr.Migrations
                     b.ToTable("Servicos");
                 });
 
-            modelBuilder.Entity("Tyr.Models.Agendamento", b =>
+            modelBuilder.Entity("Tyr.Domain.Entidades.Agendamento", b =>
                 {
-                    b.HasOne("Tyr.Models.Cliente", "Cliente")
+                    b.HasOne("Tyr.Domain.Entidades.Cliente", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tyr.Models.Profissional", "Profissional")
+                    b.HasOne("Tyr.Domain.Entidades.Profissional", "Profissional")
                         .WithMany()
                         .HasForeignKey("ProfissionalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tyr.Models.Servico", "Servico")
+                    b.HasOne("Tyr.Domain.Entidades.Servico", "Servico")
                         .WithMany()
                         .HasForeignKey("ServicoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -145,9 +148,9 @@ namespace Tyr.Migrations
                     b.Navigation("Servico");
                 });
 
-            modelBuilder.Entity("Tyr.Models.Servico", b =>
+            modelBuilder.Entity("Tyr.Domain.Entidades.Servico", b =>
                 {
-                    b.HasOne("Tyr.Models.Profissional", "Profissional")
+                    b.HasOne("Tyr.Domain.Entidades.Profissional", "Profissional")
                         .WithMany("Servicos")
                         .HasForeignKey("ProfissionalId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -156,7 +159,7 @@ namespace Tyr.Migrations
                     b.Navigation("Profissional");
                 });
 
-            modelBuilder.Entity("Tyr.Models.Profissional", b =>
+            modelBuilder.Entity("Tyr.Domain.Entidades.Profissional", b =>
                 {
                     b.Navigation("Servicos");
                 });

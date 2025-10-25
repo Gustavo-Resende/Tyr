@@ -1,9 +1,8 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyr", "Tyr.csproj", "{F79964B8-2788-6533-AB97-C01C46767990}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyr.Api", "src\Tyr.Api\Tyr.Api.csproj", "{F79964B8-2788-6533-AB97-C01C46767990}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyr.Domain", "src\Tyr.Domain\Tyr.Domain.csproj", "{00BDAA1D-AF1F-4F33-BE59-19AF8335B8A4}"
 EndProject

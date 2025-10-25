@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\Tyr.Domain\Tyr.Domain.csproj" />
+    <ProjectReference Include="..\Tyr.Infrastructure\Tyr.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
