@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace Tyr.DTOs
+﻿namespace Tyr.DTOs
 {
-    public record ProfissionalDto (int Id, string? Nome, List<ServicoDto> Servicos);
+    public record ProfissionalDto(int Id, string? Nome, List<ServicoOutputDto> Servicos);
 }

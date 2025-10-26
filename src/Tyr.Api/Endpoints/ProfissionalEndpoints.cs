@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Tyr.Api.Extensions;
+﻿using Tyr.Api.Extensions;
 using Tyr.Domain.Interfaces;
 using Tyr.Domain.ProfissionalAggregate;
 using Tyr.Domain.ProfissionalAggregate.Specifications;
-using Tyr.Domain.ServicoAggregate;
 using Tyr.DTOs;
 
 namespace Tyr.Endpoints
@@ -74,29 +72,6 @@ namespace Tyr.Endpoints
                 return Results.NoContent();
             });
 
-            // --- Endpoints de Sub-recursos ---
-
-            app.MapPost("/profissionais/{profissionalId}/servicos", async (int id, ServicoDto servicoDto, IRepository<Profissional> repository, CancellationToken cancellationToken) =>
-            {
-                var profissionalExistente = await repository.GetByIdAsync(id, cancellationToken);
-                if (profissionalExistente is null)
-                {
-                    return Results.NotFound();
-                }
-
-                var addServico = new Servico
-                {
-                    Nome = servicoDto.Nome,
-                    Preco = servicoDto.Preco,
-                    ProfissionalId = profissionalExistente.Id
-                };
-
-                await repository.AddAsync(profissionalExistente, cancellationToken);
-                await repository.SaveChangesAsync(cancellationToken);
-
-                return Results.Created($"/services/{addServico.Id}", addServico.ParseDTO());
-
-            });
         }
     }
 }

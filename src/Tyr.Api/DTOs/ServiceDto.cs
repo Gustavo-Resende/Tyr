@@ -1,4 +1,5 @@
 ﻿namespace Tyr.DTOs
 {
-    public record ServicoDto(int Id, string Nome, decimal Preco);
+    public record ServicoInputDto(string Nome, decimal Preco, int ProfissionalId);
+    public record ServicoOutputDto(int Id, string Nome, decimal Preco, int ProfissionalId);
 }
