@@ -1,4 +1,4 @@
 ﻿namespace Tyr.Application.Services.Dtos
 {
-    public record ServicoOutputDto(int Id, string Nome, decimal Preco, int ProfissionalId);
+    public record ServiceDto(int Id, string Name, decimal Price, int Duration);
 }

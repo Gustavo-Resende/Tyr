@@ -2,5 +2,5 @@
 
 namespace Tyr.Application.DTOs
 {
-    public record ProfissionalDto(int Id, string? Nome, List<ServicoOutputDto> Servicos);
+    public record ProfissionalDto(int Id, string? Nome, List<ServiceDto> Servicos);
 }

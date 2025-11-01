@@ -7,17 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.Result" Version="10.1.0" />
     <PackageReference Include="MediatR" Version="13.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Tyr.Domain\Tyr.Domain.csproj" />
-    <ProjectReference Include="..\Tyr.Infrastructure\Tyr.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Command\" />
-    <Folder Include="Services\Queries\" />
   </ItemGroup>
 
 </Project>

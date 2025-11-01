@@ -5,10 +5,10 @@ namespace Tyr.Application.Services.Extensions
 {
     public static class ServiceExtension
     {
-        public static ServicoOutputDto ParseDTO(this Servico servico)
-            => new(servico.Id, servico.Nome, servico.Preco, servico.ProfissionalId);
+        public static ServiceDto ParseDTO(this Servico servico)
+            => new(servico.Id, servico.Nome, servico.Preco, servico.DuracaoMinutos);
 
-        public static List<ServicoOutputDto> ParseDTOList(this List<Servico> servicos)
+        public static List<ServiceDto> ParseDTOList(this List<Servico> servicos)
             => servicos.Select(s => s.ParseDTO()).ToList();
     }
 }

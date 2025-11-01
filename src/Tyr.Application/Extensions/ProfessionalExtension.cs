@@ -9,13 +9,13 @@ namespace Tyr.Api.Extensions
         public static ProfissionalDto ParseDTO(this Profissional professional)
         {
             var servicosDto = professional.Servicos?
-                .Select(s => new ServicoOutputDto(s.Id, s.Nome, s.Preco, professional.Id))
+                .Select(s => new ServiceDto(s.Id, s.Nome, s.Preco, professional.Id))
                 .ToList();
 
             return new ProfissionalDto(
                 professional.Id,
                 professional.Nome,
-                servicosDto ?? new List<ServicoOutputDto>()
+                servicosDto ?? new List<ServiceDto>()
             );
         }
 
