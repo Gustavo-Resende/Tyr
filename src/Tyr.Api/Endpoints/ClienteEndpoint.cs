@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
-using Tyr.Api.Extensions;
+﻿using Tyr.Api.Extensions;
+using Tyr.Application.DTOs;
+using Tyr.Application.Extensions;
 using Tyr.Domain.ClienteAggregate;
 using Tyr.Domain.Interfaces;
-using Tyr.DTOs;
 
 namespace Tyr.Endpoints
 {

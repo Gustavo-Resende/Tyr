@@ -1,8 +1,8 @@
 ﻿using Tyr.Api.Extensions;
+using Tyr.Application.DTOs;
 using Tyr.Domain.Interfaces;
 using Tyr.Domain.ProfissionalAggregate;
 using Tyr.Domain.ProfissionalAggregate.Specifications;
-using Tyr.DTOs;
 
 namespace Tyr.Endpoints
 {

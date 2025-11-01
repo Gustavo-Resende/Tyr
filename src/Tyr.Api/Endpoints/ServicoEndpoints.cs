@@ -1,7 +1,8 @@
 ﻿using Tyr.Api.Extensions;
+using Tyr.Application.Services.Dtos;
+using Tyr.Application.Services.Extensions;
 using Tyr.Domain.Interfaces;
 using Tyr.Domain.ServicoAggregate;
-using Tyr.DTOs;
 
 namespace Tyr.Endpoints
 {
@@ -15,7 +16,7 @@ namespace Tyr.Endpoints
                 return Results.Ok(servicos.ParseDTOList());
             });
 
-            app.MapPost("/servicos", async (ServicoInputDto request, IRepository<Servico> repository, CancellationToken cancellationToken) =>
+            app.MapPost("/servicos", async (ServicoOutputDto request, IRepository<Servico> repository, CancellationToken cancellationToken) =>
             {
                 var profissionalExists = await repository.GetByIdAsync(request.ProfissionalId, cancellationToken);
                 if (profissionalExists is null)
@@ -46,7 +47,7 @@ namespace Tyr.Endpoints
                 return Results.Ok(findServico.ParseDTO());
             });
 
-            app.MapPut("/servicos/{id}", async (int id, ServicoInputDto servico, IRepository<Servico> repository, CancellationToken cancellationToken) =>
+            app.MapPut("/servicos/{id}", async (int id, ServicoOutputDto servico, IRepository<Servico> repository, CancellationToken cancellationToken) =>
             {
                 var findServico = await repository.GetByIdAsync(id, cancellationToken);
                 if (findServico is null)

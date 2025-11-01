@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Tyr.Api.Extensions;
-using Tyr.Domain.AgendamentoAggregate;
+﻿using Tyr.Domain.AgendamentoAggregate;
 using Tyr.Domain.AgendamentoAggregate.Specifications;
 using Tyr.Domain.Interfaces;
-using Tyr.DTOs;
+using Tyr.Application.Extensions;
 
 namespace Tyr.Endpoints
 {
@@ -18,7 +16,6 @@ namespace Tyr.Endpoints
                 var agendamentos = await repository.ListAsync(spec, cancellationToken);
 
                 return Results.Ok(agendamentos.ParseDTOList());
-
             });
 
             //app.MapPost("/Agendamentos", async (AgendamentoInputDto inputDto, IAgendamentoService repository, CancellationToken cancellationToken) =>

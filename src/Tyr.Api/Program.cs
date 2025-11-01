@@ -1,20 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using Tyr.Domain.Interfaces;
 using Tyr.Endpoints;
 using Tyr.Infrastructure.Persistence;
-using Tyr.Repository;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
-builder.Services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
-builder.Services.AddScoped<IServicoRepository, ServicoRepository>();
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssemblyContaining<AssemblyMarker>());
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tyr.Domain\Tyr.Domain.csproj" />
-    <ProjectReference Include="..\Tyr.Infrastructure\Tyr.Infrastructure.csproj" />
+    <ProjectReference Include="..\Tyr.Application\Tyr.Application.csproj" />
   </ItemGroup>
 
 </Project>

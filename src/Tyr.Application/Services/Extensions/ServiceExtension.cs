@@ -1,8 +1,7 @@
-﻿using Tyr.Domain.ClienteAggregate;
+﻿using Tyr.Application.Services.Dtos;
 using Tyr.Domain.ServicoAggregate;
-using Tyr.DTOs;
 
-namespace Tyr.Api.Extensions
+namespace Tyr.Application.Services.Extensions
 {
     public static class ServiceExtension
     {

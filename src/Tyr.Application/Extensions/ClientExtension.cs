@@ -1,5 +1,5 @@
-﻿using Tyr.Domain.ClienteAggregate;
-using Tyr.DTOs;
+﻿using Tyr.Application.DTOs;
+using Tyr.Domain.ClienteAggregate;
 
 namespace Tyr.Api.Extensions
 {

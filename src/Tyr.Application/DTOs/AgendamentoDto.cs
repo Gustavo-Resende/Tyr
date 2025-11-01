@@ -1,4 +1,4 @@
-﻿namespace Tyr.DTOs
+﻿namespace Tyr.Application.DTOs
 {
     public record AgendamentoInputDto(DateTimeOffset? Horario, int ClienteId, int ProfissionalId, int ServicoId);
     public record AgendamentoOutputDto(

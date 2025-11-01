@@ -1,5 +1,6 @@
-﻿using Tyr.Domain.ProfissionalAggregate;
-using Tyr.DTOs;
+﻿using Tyr.Application.DTOs;
+using Tyr.Application.Services.Dtos;
+using Tyr.Domain.ProfissionalAggregate;
 
 namespace Tyr.Api.Extensions
 {

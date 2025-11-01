@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using Tyr.Domain.AgendamentoAggregate;
 
 namespace Tyr.Domain.AgendamentoAggregate.Specifications
 {

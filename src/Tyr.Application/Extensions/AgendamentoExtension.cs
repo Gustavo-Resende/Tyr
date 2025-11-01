@@ -1,7 +1,7 @@
 ﻿using Tyr.Domain.AgendamentoAggregate;
-using Tyr.DTOs;
+using Tyr.Application.DTOs;
 
-namespace Tyr.Api.Extensions
+namespace Tyr.Application.Extensions
 {
     public static class AgendamentoExtension
     {
