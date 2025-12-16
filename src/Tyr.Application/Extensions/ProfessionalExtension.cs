@@ -1,25 +1,26 @@
 ﻿using Tyr.Application.DTOs;
 using Tyr.Application.Services.Dtos;
-using Tyr.Domain.ProfissionalAggregate;
+using Tyr.Domain.ProfessionalAggregate;
+using Tyr.Domain.ServiceAggregate;
 
-namespace Tyr.Api.Extensions
+namespace Tyr.Application.Extensions
 {
     public static class ProfessionalExtension
     {
-        public static ProfissionalDto ParseDTO(this Profissional professional)
+        public static ProfessionalDto ParseDTO(this Professional professional)
         {
-            var servicosDto = professional.Servicos?
-                .Select(s => new ServiceDto(s.Id, s.Nome, s.Preco, professional.Id))
+            var servicesDto = professional.Services?
+                .Select(s => new ServiceDto(s.Id, s.Name, s.Price, professional.Id))
                 .ToList();
 
-            return new ProfissionalDto(
+            return new ProfessionalDto(
                 professional.Id,
-                professional.Nome,
-                servicosDto ?? new List<ServiceDto>()
+                professional.Name,
+                servicesDto ?? new List<ServiceDto>()
             );
         }
 
-        public static IEnumerable<ProfissionalDto> ParseDTOList(this IEnumerable<Profissional> profissionais)
-            => profissionais.Select(professional => professional.ParseDTO());
+        public static IEnumerable<ProfessionalDto> ParseDTOList(this IEnumerable<Professional> professionals)
+            => professionals.Select(professional => professional.ParseDTO());
     }
 }
