@@ -5,9 +5,9 @@ namespace Tyr.Domain.CustomerAggregate.Specifications
 {
     internal class GetCustomerByIdSpec : Specification<Customer>
     {
-        public GetCustomerByIdSpec(int id)
+        public GetCustomerByIdSpec(Guid id)
         {
-            Query.Where(customer => customer.Id == id);
+            Query.Where(cliente => cliente.Id == id);
         }
     }
 }

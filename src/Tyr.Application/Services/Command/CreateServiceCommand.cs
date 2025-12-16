@@ -7,7 +7,7 @@ using Tyr.Domain.ServiceAggregate;
 
 namespace Tyr.Application.Services.Command
 {
-    public record CreateServiceCommand(string Name, decimal Price, int Time) : IRequest<Result<ServiceDto>>;
+    public record CreateServiceCommand(string Name, string? Description, int DurationInMinutes, decimal Price) : IRequest<Result<ServiceDto>>;
 
     public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand, Result<ServiceDto>>
     {
@@ -19,7 +19,11 @@ namespace Tyr.Application.Services.Command
 
         public async Task<Result<ServiceDto>> Handle(CreateServiceCommand request, CancellationToken cancellationToken)
         {
-            var newService = new Service(request.Name, request.Price, request.Time);
+            if (string.IsNullOrWhiteSpace(request.Name)) return Result<ServiceDto>.Error("Name is required.");
+            if (request.DurationInMinutes <= 0) return Result<ServiceDto>.Error("Duration must be greater than zero.");
+            if (request.Price <= 0) return Result<ServiceDto>.Error("Price must be greater than zero.");
+
+            var newService = new Service(request.Name, request.Price, request.DurationInMinutes, request.Description);
             await _serviceRepository.AddAsync(newService, cancellationToken);
             await _serviceRepository.SaveChangesAsync(cancellationToken);
 

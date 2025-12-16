@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tyr.Domain.AppointmentAggregate;
-using Tyr.Domain.CustomerAggregate;
-using Tyr.Domain.ProfessionalAggregate;
 using Tyr.Domain.ServiceAggregate;
+using Tyr.Domain.CustomerAggregate;
+using Tyr.Domain.AppointmentAggregate;
+using Tyr.Domain.BusinessHourAggregate;
 
 namespace Tyr.Infrastructure.Persistence
 {
@@ -13,8 +13,8 @@ namespace Tyr.Infrastructure.Persistence
         }
 
         public DbSet<Service> Services { get; set; }
-        public DbSet<Professional> Professionals { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<BusinessHour> BusinessHours { get; set; }
     }
 }

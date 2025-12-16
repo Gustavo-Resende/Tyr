@@ -1,24 +1,48 @@
-using Tyr.Domain.CustomerAggregate;
+using System;
 using Tyr.Domain.Entities;
-using Tyr.Domain.ProfessionalAggregate;
-using Tyr.Domain.ServiceAggregate;
 
 namespace Tyr.Domain.AppointmentAggregate
 {
-    public class Appointment : EntityBase<int>, IAggregateRoot
+    public class Appointment : EntityBase<Guid>, IAggregateRoot
     {
-        public DateTimeOffset? StartTime { get; set; }
-        public TimeSpan? Duration { get; set; } = TimeSpan.FromMinutes(30);
-        public string? Status { get; set; } = "Scheduled";
+        public Appointment(Guid customerId, Guid serviceId, DateTime startDateTime, string? notes = null)
+        {
+            Id = Guid.NewGuid();
+            CustomerId = customerId;
+            ServiceId = serviceId;
+            StartDateTime = startDateTime;
+            Notes = notes;
+            Status = AppointmentStatus.Pending;
+            CreatedAt = DateTime.UtcNow;
+        }
 
-        public int CustomerId { get; set; }
-        public Customer? Customer { get; set; }
+        public Guid CustomerId { get; private set; }
+        public Guid ServiceId { get; private set; }
+        public DateTime StartDateTime { get; private set; }
+        public DateTime EndDateTime { get; private set; }
+        public AppointmentStatus Status { get; private set; }
+        public string? Notes { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; private set; }
 
-        public int ProfessionalId { get; set; }
-        public Professional? Professional { get; set; }
-        
-        public int ServiceId { get; set; }
-        public Service? Service { get; set; }
+        public virtual Tyr.Domain.CustomerAggregate.Customer? Customer { get; private set; }
+        public virtual Tyr.Domain.ServiceAggregate.Service? Service { get; private set; }
 
+        public void CalculateEndDateTime(int durationMinutes)
+        {
+            EndDateTime = StartDateTime.AddMinutes(durationMinutes);
+        }
+
+        public void UpdateStatus(AppointmentStatus status)
+        {
+            Status = status;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void UpdateStart(DateTime newStart)
+        {
+            StartDateTime = newStart;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }

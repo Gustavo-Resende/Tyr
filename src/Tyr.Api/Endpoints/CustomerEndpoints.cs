@@ -1,5 +1,8 @@
-using Tyr.Application.DTOs;
-using Tyr.Application.Extensions;
+using MediatR;
+using Tyr.Application.Customers.Commands;
+using Tyr.Application.Customers.Dtos;
+using Tyr.Application.Customers.Extensions;
+using Tyr.Application.Customers.Queries;
 using Tyr.Domain.CustomerAggregate;
 using Tyr.Domain.Interfaces;
 
@@ -9,67 +12,38 @@ namespace Tyr.Endpoints
     {
         public static void MapCustomerEndpoints(this IEndpointRouteBuilder app)
         {
-            app.MapGet("/customers", async (IReadRepository<Customer> repository, CancellationToken cancellationToken) =>
+            app.MapGet("/customers", async (IMediator mediator, CancellationToken cancellationToken) =>
             {
-                var customers = await repository.ListAsync(cancellationToken);
-
-                return Results.Ok(customers.ParseDTOList());
+                var result = await mediator.Send(new GetAllCustomersQuery(), cancellationToken);
+                return result.IsSuccess ? Results.Ok(result.Value) : Results.Problem(result.Errors?.FirstOrDefault());
             });
 
-            app.MapPost("/customers", async (CustomerInputDto customerInputDto, IRepository<Customer> repository, CancellationToken cancellationToken) =>
+            app.MapPost("/customers", async (IMediator mediator, CustomerInputDto customerInputDto, CancellationToken cancellationToken) =>
             {
-                var customer = new Customer
-                {
-                    Name = customerInputDto.Name,
-                    Phone = customerInputDto.Phone
-                };
-
-                await repository.AddAsync(customer, cancellationToken);
-                await repository.SaveChangesAsync(cancellationToken);
-
-                return Results.Created($"/customers/{customer.Id}", customer.ParseDTO());
+                var res = await mediator.Send(new CreateCustomerCommand(customerInputDto.Name, customerInputDto.Phone, customerInputDto.Email), cancellationToken);
+                if (res.IsSuccess) return Results.Created($"/customers/{res.Value.Id}", res.Value);
+                return Results.BadRequest(res.Errors?.FirstOrDefault());
             });
 
-            app.MapDelete("/customers/{id}", async (int id, IRepository<Customer> repository, CancellationToken cancellationToken) =>
+            app.MapDelete("/customers/{id}", async (IMediator mediator, Guid id, CancellationToken cancellationToken) =>
             {
-                var found = await repository.GetByIdAsync(id, cancellationToken);
-                if (found == null)
-                {
-                    return Results.NotFound();
-                }
-
-                await repository.DeleteAsync(found, cancellationToken);
-                await repository.SaveChangesAsync(cancellationToken);
-
-                return Results.NoContent();
+                var res = await mediator.Send(new DeleteCustomerCommand(id), cancellationToken);
+                if (res.IsSuccess) return Results.NoContent();
+                return Results.NotFound();
             });
 
-            app.MapGet("/customers/{id}", async (int id, IReadRepository<Customer> repository, CancellationToken cancellationToken) =>
+            app.MapGet("/customers/{id}", async (IMediator mediator, Guid id, CancellationToken cancellationToken) =>
             {
-                var found = await repository.GetByIdAsync(id, cancellationToken);
-                if (found == null)
-                {
-                    return Results.NotFound();
-                }
-
-                return Results.Ok(found.ParseDTO());
+                var res = await mediator.Send(new GetCustomerByIdQuery(id), cancellationToken);
+                if (res.IsSuccess) return Results.Ok(res.Value);
+                return Results.NotFound();
             });
 
-            app.MapPut("/customers/{id}", async (int id, IRepository<Customer> repository, CancellationToken cancellationToken, CustomerInputDto customerInputDto) =>
+            app.MapPut("/customers/{id}", async (IMediator mediator, Guid id, CustomerInputDto customerInputDto, CancellationToken cancellationToken) =>
             {
-                var found = await repository.GetByIdAsync(id, cancellationToken);
-                if (found == null)
-                {
-                    return Results.NotFound();
-                }
-
-                found.Name = customerInputDto.Name;
-                found.Phone = customerInputDto.Phone;
-
-                await repository.UpdateAsync(found, cancellationToken);
-                await repository.SaveChangesAsync(cancellationToken);
-
-                return Results.Ok(found.ParseDTO());
+                var res = await mediator.Send(new UpdateCustomerCommand(id, customerInputDto.Name, customerInputDto.Phone, customerInputDto.Email), cancellationToken);
+                if (res.IsSuccess) return Results.Ok(res.Value);
+                return Results.NotFound();
             });
         }
     }
