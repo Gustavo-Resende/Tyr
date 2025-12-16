@@ -1,7 +1,7 @@
-using Tyr.Domain.AppointmentAggregate;
-using Tyr.Domain.AppointmentAggregate.Specifications;
-using Tyr.Domain.Interfaces;
-using Tyr.Application.Extensions;
+using MediatR;
+using Tyr.Application.Appointments.Commands;
+using Tyr.Application.Appointments.Dtos;
+using Tyr.Application.Appointments.Queries;
 
 namespace Tyr.Endpoints
 {
@@ -9,80 +9,25 @@ namespace Tyr.Endpoints
     {
         public static void MapAppointmentEndpoints(this IEndpointRouteBuilder app)
         {
-            app.MapGet("/appointments", async (IReadRepository<Appointment> repository, CancellationToken cancellationToken) =>
+            app.MapGet("/appointments", async (IMediator mediator, CancellationToken cancellationToken) =>
             {
-                var spec = new AppointmentsWithDetailsSpec();
-
-                var appointments = await repository.ListAsync(spec, cancellationToken);
-
-                return Results.Ok(appointments.ParseDTOList());
+                var res = await mediator.Send(new GetAllAppointmentsQuery(), cancellationToken);
+                return res.IsSuccess ? Results.Ok(res.Value) : Results.Problem(res.Errors?.FirstOrDefault());
             });
 
-            // Example (commented): create appointment flow translated to English
-            // app.MapPost("/appointments", async (AppointmentInputDto inputDto, IAppointmentService repository, CancellationToken cancellationToken) =>
-            // {
-            //     var customerExists = await repository.CheckCustomerExistsAsync(inputDto.CustomerId);
-            //     if (!customerExists) return Results.NotFound();
-            //
-            //     var professionalExists = await repository.CheckProfessionalExistsAsync(inputDto.ProfessionalId);
-            //     if (!professionalExists) return Results.NotFound();
-            //
-            //     var serviceExists = await repository.CheckServiceExistsAsync(inputDto.ServiceId);
-            //     if (!serviceExists) return Results.NotFound();
-            //
-            //     var serviceDuration = TimeSpan.FromMinutes(30);
-            //     var startTime = inputDto.StartTime.Value;
-            //     var professionalId = inputDto.ProfessionalId;
-            //
-            //     var conflictSpec = new AppointmentConflictSpec(professionalId, startTime, serviceDuration);
-            //
-            //     // check conflict using repository/spec
-            //     DateTimeOffset newEndTime = inputDto.StartTime.Value.Add(serviceDuration);
-            //
-            //     var conflictFound = await context.Appointments.AnyAsync(a =>
-            //         a.ProfessionalId == inputDto.ProfessionalId &&
-            //         a.StartTime.HasValue && a.Duration.HasValue &&
-            //         inputDto.StartTime < (a.StartTime.Value + a.Duration.Value) &&
-            //         newEndTime > a.StartTime.Value
-            //     );
-            //
-            //     if (conflictFound) return Results.Conflict("Time not available for this professional.");
-            //
-            //     var appointment = new Appointment
-            //     {
-            //         StartTime = inputDto.StartTime,
-            //         CustomerId = inputDto.CustomerId,
-            //         ProfessionalId = inputDto.ProfessionalId,
-            //         ServiceId = inputDto.ServiceId,
-            //     };
-            //
-            //     context.Appointments.Add(appointment);
-            //     await context.SaveChangesAsync();
-            //
-            //     var outputDto = new AppointmentOutputDto(
-            //         appointment.Id,
-            //         appointment.StartTime,
-            //         appointment.Status,
-            //         customerExists.Name,
-            //         professionalExists.Name,
-            //         serviceExists.Name
-            //     );
-            //
-            //     return Results.Created($"/appointments/{appointment.Id}", outputDto);
-            // });
-
-            app.MapDelete("/appointments/{id}", async (int id, IRepository<Appointment> repository, CancellationToken cancellationToken) =>
+            app.MapPost("/appointments", async (IMediator mediator, AppointmentInputDto dto, CancellationToken cancellationToken) =>
             {
-                var appointment = await repository.GetByIdAsync(id, cancellationToken);
-                if (appointment == null)
-                {
-                    return Results.NotFound();
-                }
+                var cmd = new CreateAppointmentCommand(dto.StartDateTime, dto.CustomerId, dto.ServiceId, dto.Notes);
+                var res = await mediator.Send(cmd, cancellationToken);
+                if (res.IsSuccess) return Results.Created($"/appointments/{res.Value.Id}", res.Value);
+                return Results.BadRequest(res.Errors?.FirstOrDefault());
+            });
 
-                await repository.DeleteAsync(appointment, cancellationToken);
-                await repository.SaveChangesAsync(cancellationToken);
-
-                return Results.NoContent();
+            app.MapDelete("/appointments/{id}", async (IMediator mediator, Guid id, CancellationToken cancellationToken) =>
+            {
+                var res = await mediator.Send(new DeleteAppointmentCommand(id), cancellationToken);
+                if (res.IsSuccess) return Results.NoContent();
+                return Results.NotFound();
             });
         }
     }

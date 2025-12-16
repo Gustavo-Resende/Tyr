@@ -5,21 +5,12 @@ namespace Tyr.Domain.AppointmentAggregate.Specifications
 {
     public class AppointmentConflictSpec : Specification<Appointment>
     {
-        public AppointmentConflictSpec(int professionalId, DateTimeOffset newStart, TimeSpan serviceDuration)
+        public AppointmentConflictSpec(Guid serviceId, DateTime start, DateTime end)
         {
-            DateTimeOffset newEnd = newStart.Add(serviceDuration);
-
-            Query.Where(existing =>
-                existing.ProfessionalId == professionalId &&
-
-                existing.StartTime.HasValue &&
-                existing.Duration.HasValue &&
-
-                newStart < (existing.StartTime.Value.Add(existing.Duration.Value)) &&
-                newEnd > existing.StartTime.Value
-            );
-
-            Query.AsNoTracking();
+            // check any appointment for the same service that overlaps the given window
+            Query.Where(a => a.ServiceId == serviceId &&
+                             a.StartDateTime < end &&
+                             a.EndDateTime > start);
         }
     }
 }

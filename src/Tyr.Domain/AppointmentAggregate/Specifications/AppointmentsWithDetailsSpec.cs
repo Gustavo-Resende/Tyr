@@ -8,7 +8,6 @@ namespace Tyr.Domain.AppointmentAggregate.Specifications
         public AppointmentsWithDetailsSpec()
         {
             Query.Include(a => a.Customer)
-                 .Include(a => a.Professional)
                  .Include(a => a.Service);
         }
     }

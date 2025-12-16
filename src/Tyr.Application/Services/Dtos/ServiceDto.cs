@@ -1,4 +1,4 @@
 ﻿namespace Tyr.Application.Services.Dtos
 {
-    public record ServiceDto(int Id, string Name, decimal Price, int Duration);
+    public record ServiceDto(Guid Id, string Name, string Description, int DurationInMinutes, decimal Price);
 }
