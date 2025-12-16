@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tyr.Domain.AgendamentoAggregate;
-using Tyr.Domain.ClienteAggregate;
-using Tyr.Domain.ProfissionalAggregate;
-using Tyr.Domain.ServicoAggregate;
+using Tyr.Domain.AppointmentAggregate;
+using Tyr.Domain.CustomerAggregate;
+using Tyr.Domain.ProfessionalAggregate;
+using Tyr.Domain.ServiceAggregate;
 
 namespace Tyr.Infrastructure.Persistence
 {
@@ -12,9 +12,9 @@ namespace Tyr.Infrastructure.Persistence
         {
         }
 
-        public DbSet<Servico> Servicos { get; set; }
-        public DbSet<Profissional> Profissionais { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Agendamento> Agendamentos { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<Professional> Professionals { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
     }
 }
