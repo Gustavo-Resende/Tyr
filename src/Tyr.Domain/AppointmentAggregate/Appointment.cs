@@ -28,6 +28,7 @@ namespace Tyr.Domain.AppointmentAggregate
         public virtual Tyr.Domain.CustomerAggregate.Customer? Customer { get; private set; }
         public virtual Tyr.Domain.ServiceAggregate.Service? Service { get; private set; }
 
+        // keep helper for compatibility if needed
         public void CalculateEndDateTime(int durationMinutes)
         {
             EndDateTime = StartDateTime.AddMinutes(durationMinutes);

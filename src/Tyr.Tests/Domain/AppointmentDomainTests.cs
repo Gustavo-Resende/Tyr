@@ -17,9 +17,9 @@ namespace Tyr.Tests
             var start = DateTime.UtcNow;
 
             // Act
-            var appointment = new Appointment(customer.Id, service.Id, start, "Some notes");
+            var appointment = new Appointment(customer.Id, service.Id, start);
             appointment.CalculateEndDateTime(service.DurationInMinutes);
-
+             
             // Assert
             Assert.Equal(customer.Id, appointment.CustomerId);
             Assert.Equal(service.Id, appointment.ServiceId);

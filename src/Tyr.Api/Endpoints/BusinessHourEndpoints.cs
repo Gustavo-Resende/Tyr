@@ -23,6 +23,17 @@ namespace Tyr.Endpoints
                 return operation;
             });
 
+            app.MapGet("/businesshours/available", async (IMediator mediator, DayOfWeek dayOfWeek, Guid? serviceId, CancellationToken cancellationToken) =>
+            {
+                var res = await mediator.Send(new GetAvailableSlotsByDayQuery(dayOfWeek, serviceId), cancellationToken);
+                return res.IsSuccess ? Results.Ok(res.Value) : Results.Problem(res.Errors?.FirstOrDefault());
+            }).WithName("GetAvailableSlotsByDay").WithTags("BusinessHours").WithOpenApi(operation =>
+            {
+                operation.Summary = "Obter horários disponíveis";
+                operation.Description = "Retorna os horários disponíveis para um dia da semana. Parâmetros: dayOfWeek (required), serviceId (optional).";
+                return operation;
+            });
+
             app.MapPost("/businesshours", async (IMediator mediator, BusinessHourInputDto dto, CancellationToken cancellationToken) =>
             {
                 var res = await mediator.Send(new CreateBusinessHourCommand(dto.DayOfWeek, dto.StartTime, dto.EndTime, dto.IsActive), cancellationToken);

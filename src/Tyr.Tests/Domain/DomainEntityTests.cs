@@ -60,7 +60,7 @@ namespace Tyr.Tests.Domain
             var appointment = new Appointment(customer.Id, service.Id, start);
 
             var newStart = start.AddHours(1);
-
+    
             // Act
             appointment.UpdateStart(newStart);
 
