@@ -4,6 +4,7 @@ using Tyr.Application.Customers.Dtos;
 using Tyr.Domain.CustomerAggregate;
 using Tyr.Domain.Interfaces;
 using Tyr.Application.Customers.Extensions;
+using Tyr.Domain.CustomerAggregate.Specifications;
 
 namespace Tyr.Application.Customers.Commands
 {
@@ -23,7 +24,17 @@ namespace Tyr.Application.Customers.Commands
             if (string.IsNullOrWhiteSpace(request.Name)) return Result<CustomerOutputDto>.Error("Name is required.");
             if (string.IsNullOrWhiteSpace(request.Phone)) return Result<CustomerOutputDto>.Error("Phone is required.");
 
-            var customer = new Customer(request.Name, request.Phone, request.Email);
+            var phoneNormalized = request.Phone.Trim();
+            var emailNormalized = string.IsNullOrWhiteSpace(request.Email) ? null : request.Email!.Trim().ToLowerInvariant();
+
+            var spec = new GetCustomerByPhoneOrEmailSpec(phoneNormalized, emailNormalized);
+            var existing = (await _repository.ListAsync(spec, cancellationToken)).FirstOrDefault();
+            if (existing != null)
+            {
+                return Result<CustomerOutputDto>.Error("Customer already exists.");
+            }
+
+            var customer = new Customer(request.Name.Trim(), phoneNormalized, emailNormalized);
 
             await _repository.AddAsync(customer, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyr.Api", "src\Tyr.Api\Tyr.Api.csproj", "{F79964B8-2788-6533-AB97-C01C46767990}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyr.Infrastructure", "src\Tyr.Infrastructure\Tyr.Infrastructure.csproj", "{153540EE-AB1D-4ED7-B16E-3862C236BB10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyr.Application", "src\Tyr.Application\Tyr.Application.csproj", "{F8D10ACC-05DD-44C0-B836-01E5EE2F24F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyr.Tests", "src\Tyr.Tests\Tyr.Tests.csproj", "{2C5B8F20-D317-48B3-9B4B-3115191C1E3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F8D10ACC-05DD-44C0-B836-01E5EE2F24F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8D10ACC-05DD-44C0-B836-01E5EE2F24F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8D10ACC-05DD-44C0-B836-01E5EE2F24F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C5B8F20-D317-48B3-9B4B-3115191C1E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C5B8F20-D317-48B3-9B4B-3115191C1E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C5B8F20-D317-48B3-9B4B-3115191C1E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5B8F20-D317-48B3-9B4B-3115191C1E3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
